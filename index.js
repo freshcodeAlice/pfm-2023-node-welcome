@@ -1,27 +1,17 @@
 const fsPromises = require('fs/promises');
 
 
-console.time('1');
-
 const promise = fsPromises.readFile('./citadelle.txt', 'utf-8');
 promise.then(data => {
-    // console.log(data)
-    console.log(data.length)
+   const strArray = data.split('\n');
+   const filt = strArray.filter(el => el);
+   const randomIndex = Math.floor(Math.random() * filt.length);
+   console.log(filt[randomIndex])
 });
-
-console.timeEnd('1');
 
 // const file = fs.readFileSync('./citadelle.txt', {encoding: 'utf-8'});  // метод, який синхронно читає вміст файлу і при цьому БЛОКУЄ потік виконання
 
 // // console.log(file);
 //  console.timeEnd('1');
 
-
-
- /*
-const promise = fsPromises.readFile('./file.txt', 'utf-8');
-promise.then(data => {
-    console.log(data)
-});
-
-*/
+// Таска: завантажити текстовий файл з книгою з репозиторія, прочитати файл модулем fs і вивести на консоль рандомний абзац книги
