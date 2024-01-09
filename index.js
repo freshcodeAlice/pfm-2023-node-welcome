@@ -1,30 +1,17 @@
-const {User, multyply, b} = require('./math.js');
-const {format} = require('date-fns');
+const fsPromises = require('fs/promises');
 
-console.log(User);
-
-const user = new User('John', 'Doe');
-console.log(user);
+console.log(fsPromises);
 
 /*
-require() - функція для імпорту модуля
-
-1. Resolving - розв'язування шляхів
-    1.1 - core modules - вбудовані модулі ноди
-    1.2 - node_modules - всі підключені за допомогою npm сторонні бібліотеки
-    1.3 - В папці проєкту
-        - file
-            *.js
-            *.json
-        - directory
-            - package.json
-                "main" -> entrypoint (файл-стартова точка проєкту)
-            - index.js | *.json
-    1.4. throw new Error
-2. Loading - завантаження (і парсинг)
-3. Wrapping - обгортка об'єкта в оточення (контекст виконання)
-4. Evaluation - виконання коду
-5. Caching - кешування результату
-
+const file = fs.readFileSync('./file.txt', {encoding: 'utf-8'});  // метод, який синхронно читає вміст файлу і при цьому БЛОКУЄ потік виконання
 
 */
+
+// console.log(file);
+
+const promise = fsPromises.readFile('./file.txt', 'utf-8');
+promise.then(data => {
+    console.log(data)
+});
+
+
