@@ -6,7 +6,8 @@ promise.then(data => {
    const strArray = data.split('\n');
    const filt = strArray.filter(el => el);
    const randomIndex = Math.floor(Math.random() * filt.length);
-   console.log(filt[randomIndex])
+   const randomQuote = filt[randomIndex];
+    fsPromises.writeFile('./file.txt', randomQuote, 'utf-8');
 });
 
 // const file = fs.readFileSync('./citadelle.txt', {encoding: 'utf-8'});  // метод, який синхронно читає вміст файлу і при цьому БЛОКУЄ потік виконання
