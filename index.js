@@ -1,13 +1,28 @@
 const http = require('http');
+const fs = require('fs/promises');
 
 const users = new Map();
 
 function signIn(userObj) {
-    users.set(userObj.email, userObj)
+    users.set(userObj.email, userObj);
+    writeMapToFile();
 }
 
 function getListUsers() {
-    return [...users.values()];
+    return [...users.values()]
+}
+
+
+function writeMapToFile() {
+    fs.writeFile('users.json', JSON.stringify(getListUsers()), 'utf-8');
+}
+
+function readUsersFromFile() {
+    return fs.readFile('./users.json', 'utf-8')
+    .then(data => {
+      // юзери - це стрінгіфайнутий json
+      return JSON.parse(data);
+    })
 }
 
 
@@ -31,8 +46,11 @@ function requestListener(request, response) {
             // відповісти на запит списком вже зареєстрованих юзерів
             response.statusCode = 200;
             response.statusMessage = 'OK';
-            const usersList = getListUsers();
-            response.end(JSON.stringify(usersList))
+            const usersList = readUsersFromFile()
+                .then(usersList => {
+                    response.end(JSON.stringify(usersList))
+                })
+          
            
         } else {
             response.statusCode = 404;
@@ -55,7 +73,6 @@ function requestListener(request, response) {
             });
             request.on('end', () => {
                 // отут всі дані вже завантажено і сталася фінальна подія, яка сигналізує про завершення завантаження інфи
-               
                 // можемо щось робити з тим, що вже лежить в глобальній змінній string
                 const userObj = JSON.parse(string);
                 console.log(userObj);
