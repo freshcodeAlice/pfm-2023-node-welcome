@@ -1,32 +1,48 @@
 const http = require('http');
 const fs = require('fs/promises');
+const express = require('express');
 
-const users = new Map();
+const app = express(); // app - екземпляр маршрутизатора
 
-function signIn(userObj) {
-    users.set(userObj.email, userObj);
-    writeMapToFile();
-}
+const server = http.createServer(app); // створюємо сервер, який реагує на запити та передаємо функцію-обробник запитів
 
-function getListUsers() {
-    return [...users.values()]
-}
+server.listen(5000);
+
+/*
 
 
-function writeMapToFile() {
-    fs.writeFile('users.json', JSON.stringify(getListUsers()), 'utf-8');
-}
+Express - фреймворк
+Додаток (application) (app) - екземпляр классу Express, який здійснює маршрутизацію
+Маршрут (end-point, "ручка") - комбінація з url та методу запиту
 
-function readUsersFromFile() {
-    return fs.readFile('./users.json', 'utf-8')
+*/
+
+
+
+app.get('/', (req, res) => {  // функція-обробник запиту на метод GET, url /
+    res.status(200).send('Hello, world')
+});
+
+app.get('/about', (req, res) => {
+    return fs.readFile('./staticView/index.html', 'utf-8')
     .then(data => {
-      // юзери - це стрінгіфайнутий json
-      return JSON.parse(data);
+        res.status(200).send(data);
     })
-}
+})
+
+app.post('/users', () => {  // функція-обробник запиту на метод POST, url /users
+
+})
+
+app.put('/about', () => { //функція-обробник запиту на метод PUT, url /about
+
+})
 
 
-const server = http.createServer(requestListener); // створюємо сервер, який реагує на запити та передаємо функцію-обробник запитів
+
+
+/*
+
 
 
 function requestListener(request, response) {
@@ -92,4 +108,32 @@ function requestListener(request, response) {
    
 }
 
-server.listen(5000);
+
+
+
+const users = new Map();
+
+function signIn(userObj) {
+    users.set(userObj.email, userObj);
+    writeMapToFile();
+}
+
+function getListUsers() {
+    return [...users.values()]
+}
+
+
+function writeMapToFile() {
+    fs.writeFile('users.json', JSON.stringify(getListUsers()), 'utf-8');
+}
+
+function readUsersFromFile() {
+    return fs.readFile('./users.json', 'utf-8')
+    .then(data => {
+      // юзери - це стрінгіфайнутий json
+      return JSON.parse(data);
+    })
+}
+
+
+*/
