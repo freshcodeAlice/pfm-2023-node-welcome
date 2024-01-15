@@ -1,7 +1,10 @@
 POST http://localhost:5000/users HTTP/1.1
+Content-Type: application/json
 
 {
-    "username": "Kind",
+    "firstName": "Kind",
     "lastName": "Doe",
-    "email": "fdsdfsdfdsdfds@kjhsdf"
+    "email": "fdsfdsdfds@kjh.sdf",
+    "password": "FDSjswe@Q#4",
+    "isSubscribed": true
 }

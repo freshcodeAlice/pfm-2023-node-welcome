@@ -1,5 +1,11 @@
 const express = require('express');
 const fs = require('fs/promises');
+const SIGN_UP_SCHEMA = require('./validations/signUpSchema');
+const UserController = require('./controllers/User.controller');
+const {validationUser} = require('./middleware/validateUser');
+
+const bodyParser = express.json(); // проміжний обробник запиту, який вбудовано в Експресс, який зчитує тіло (body) http-запиту ТІЛЬКИ ЗА НАЯВНОСТІ заголовка Content-Type: application/json
+// якщо все ок, то bodyParser дописує до об'єкта req нове поле body
 
 const app = express(); // Маршрутизатор
 
@@ -14,23 +20,7 @@ app.get('/', (req, res) => {
     })
 });
 
-app.post('/users', (req, res, next) => { // middleware - проміжний обробник запиту
-    console.log('перший обробник запиту');
-    req.abracadabra = 'Hello';
-    next();
-}, (req, res, next) => {
-    console.log('другий обробник запиту');
-    next()
-}, (req, res, next) => {
-    console.log('третій обробник запиту');
-    if(Math.random() > 0.5) {
-        return res.status(404).send('Not found')
-    }
-    next()
-}, (req, res, next) => {
-    console.log('четвертий обробник запиту');
-    res.send('OK');
-})
+app.post('/users', bodyParser, validationUser, UserController.createUser)
 
 module.exports = app;
 
