@@ -1,42 +1,48 @@
+const app = require('./app');
 const http = require('http');
-const fs = require('fs/promises');
-const express = require('express');
 
-const app = express(); // app - екземпляр маршрутизатора
+const PORT = 5000;
 
-const server = http.createServer(app); // створюємо сервер, який реагує на запити та передаємо функцію-обробник запитів
+const server = http.createServer(app)
 
-server.listen(5000);
-
-/*
+server.listen(PORT, () => {
+    console.log(`App started on port ${PORT}`)
+});
 
 
-Express - фреймворк
-Додаток (application) (app) - екземпляр классу Express, який здійснює маршрутизацію
-Маршрут (end-point, "ручка") - комбінація з url та методу запиту
+
+
+
+
+
+
+
+
+
+/* 
+Задача: зареєструвати юзера
+
++0. Створити сервер, який приймає запити
+1. Прийняти відповідний запит.
+2. Прийняти дані і розпарсити їх
+3. Валідація даних 
+    3.2. Якщо валідація даних пройшла неуспішно - відповісти помилкою
+4. Створити сутність юзера
+5. Зберегти юзера
+6. Надіслати з сервера успішний статус і дані зареєстрованого юзера
+ 
+
+
 
 */
 
 
 
-app.get('/', (req, res) => {  // функція-обробник запиту на метод GET, url /
-    res.status(200).send('Hello, world')
-});
 
-app.get('/about', (req, res) => {
-    return fs.readFile('./staticView/index.html', 'utf-8')
-    .then(data => {
-        res.status(200).send(data);
-    })
-})
 
-app.post('/users', () => {  // функція-обробник запиту на метод POST, url /users
 
-})
 
-app.put('/about', () => { //функція-обробник запиту на метод PUT, url /about
 
-})
 
 
 
