@@ -1,3 +1,5 @@
+const SIGN_UP_SCHEMA = require('../validations/signUpSchema');
+
 module.exports.validationUser = async (req, res, next) => {
 
     console.log(req.body); // якщо bodyParser відпрацював вірно то тут лежить інфа з тіла http-запиту

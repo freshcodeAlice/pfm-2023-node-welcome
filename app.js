@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require('fs/promises');
-const SIGN_UP_SCHEMA = require('./validations/signUpSchema');
+
 const UserController = require('./controllers/User.controller');
 const {validationUser} = require('./middleware/validateUser');
 
@@ -20,7 +20,14 @@ app.get('/', (req, res) => {
     })
 });
 
-app.post('/users', bodyParser, validationUser, UserController.createUser)
+app.post('/users', bodyParser, validationUser, UserController.createUser);
+app.get('/users', UserController.getAllUsers);
+
+// Таска: створити маршрут на отримання всіх юзерів
+/* Декомпозиція
+1. Прийняти запит - get, '/users'
+2. Написати метод контроллера, який взаємодіє з моделлю і отриманий результат видає у відповідь на запит
+*/
 
 module.exports = app;
 
