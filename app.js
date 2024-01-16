@@ -23,11 +23,13 @@ app.get('/', (req, res) => {
 app.post('/users', bodyParser, validationUser, UserController.createUser);
 app.get('/users', UserController.getAllUsers);
 
-// Таска: створити маршрут на отримання всіх юзерів
-/* Декомпозиція
-1. Прийняти запит - get, '/users'
-2. Написати метод контроллера, який взаємодіє з моделлю і отриманий результат видає у відповідь на запит
-*/
+app.get('/users/:userId', UserController.getOne);
+app.delete('/users/:userId', UserController.deleteOne);
+
+//app.get('/users/2')
+//http://localhost/path?key=value&key2=value2    ---- query-string (запит)
+
+// Задача: отримати інфу одного юзера за його id
 
 module.exports = app;
 

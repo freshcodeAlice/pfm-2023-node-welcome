@@ -14,3 +14,24 @@ module.exports.getAllUsers = async (req, res) => {
     const allUsers = User.findAll();
     res.status(200).send(allUsers)
 }
+
+
+module.exports.getOne = async(req, res) => {
+ //   req.params.userId
+    const {userId} = req.params;
+    const user = User.findOne(Number(userId));
+    if(user) {
+       return res.status(200).send(user);
+    } 
+        res.status(404).send('There is no such user');
+}
+
+module.exports.deleteOne = async (req, res) => {
+    const {userId} = req.params;
+    const user = User.findOne(Number(userId));
+    if(user){ 
+        const result = user.deleteUser();
+        return res.status(200).send(result)
+    }
+    res.status(404).send('There is no such user')
+}
