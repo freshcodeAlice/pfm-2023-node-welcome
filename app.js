@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require('fs/promises');
-
+const {errorHandler} = require('./errorHandlers/error');
 const UserController = require('./controllers/User.controller');
 const {validationUser} = require('./middleware/validateUser');
 
@@ -20,12 +20,16 @@ app.get('/', (req, res) => {
     })
 });
 
-app.post('/users', bodyParser, validationUser, UserController.createUser);
+app.use(bodyParser); // bodyParser відпрацьовуватиме на всіх роутах (але для його роботи у запита має бути Content-Type: application/json)
+
+app.post('/users', validationUser, UserController.createUser);
 app.get('/users', UserController.getAllUsers);
 
 app.get('/users/:userId', UserController.getOne);
 app.delete('/users/:userId', UserController.deleteOne);
-app.put('/users/:userId', bodyParser, UserController.updateOne);
+app.put('/users/:userId', UserController.updateOne);
+
+app.use(errorHandler)
 
 //app.get('/users/2')
 //http://localhost/path?key=value&key2=value2    ---- query-string (запит)
@@ -43,4 +47,4 @@ module.exports = app;
 - обірвати ланцюжок обробки
 - викликати наступний обробник в ланцюжку (за допомогою next())
 
-*/
+*/ 

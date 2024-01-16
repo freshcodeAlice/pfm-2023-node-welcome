@@ -46,10 +46,10 @@ class User {
 
 /*
 CRUD
-Create
-Read
-Update
-Delete
+Create - createOne
+Read - getAll, getOne
+Update - updateOne
+Delete - deleteOne
 
 */
 
