@@ -34,7 +34,7 @@ class User {
     }
 
 
-    updateUser(userId, userData) {
+   static updateUser(userId, userData) {
         const user = db.get(userId);
         const newData = {
             ...user,

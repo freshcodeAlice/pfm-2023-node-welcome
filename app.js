@@ -25,6 +25,7 @@ app.get('/users', UserController.getAllUsers);
 
 app.get('/users/:userId', UserController.getOne);
 app.delete('/users/:userId', UserController.deleteOne);
+app.put('/users/:userId', bodyParser, UserController.updateOne);
 
 //app.get('/users/2')
 //http://localhost/path?key=value&key2=value2    ---- query-string (запит)
